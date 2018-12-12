@@ -8,7 +8,6 @@ import * as actions from './actions';
 // import AuthButton from './components/AuthButton';
 // import Landing from './components/Landing';
 import SelectedDash from './components/SelectedDash';
-// import GenDash from './components/GenDash';
 import UserDash from './components/UserDash';
 import fakeData from './fakedata';
 import Logo from './components/Logo';

@@ -10,6 +10,7 @@ import Loader from './Loader';
 import SMData from './SMData'; //MPP data
 import MppInfo from './dashComponents/Mppinfo';
 import FollowButton from './dashComponents/FollowButton';
+import SocialList from './list/mppSocial';
 // tools
 import { Animated } from 'react-animated-css';
 //
@@ -28,7 +29,7 @@ class PaperSheet extends Component {
   state = {
     mppLockup: this.props.match.params.mppName,
     lastName: '',
-    name: ' ',
+    name: '',
     position: [],
     url: '',
     photo: ' ',
@@ -44,7 +45,6 @@ class PaperSheet extends Component {
     facebook: '',
     userId: '',
     followingId: '',
-
     isLoading: true
   };
   // --end of state
@@ -53,7 +53,7 @@ class PaperSheet extends Component {
   mppSearch() {
     axios
       .get(`/api/mppName/${this.state.mppLockup}`, {
-        name: name
+        // name: name
       })
       .then(res => {
         this.setState({
@@ -70,9 +70,34 @@ class PaperSheet extends Component {
           parliamentNumber: res.data[0].careerDetails[0].parliamentNumber,
           telephone: res.data[0].addressEmailId.Telephone
         });
+        console.log('name set ', this.state.name);
       })
       .catch(err => console.log(err));
   }
+  //
+  getTwitter() {
+    SocialList.forEach(tName => {
+      if (tName.name === this.state.name) {
+        return this.setState({ twitter: tName.twitter });
+      }
+    });
+  }
+
+  //
+  getFacebook = () => {
+    SocialList.forEach(fName => {
+      // console.log('loop name ', fName.name);
+      // console.log('state name ', this.state.name);
+      // console.log(fName.name);
+      // console.log(this.state.name);
+      if (fName.name === this.state.name) {
+        // console.log(fName.name);
+        // console.log(this.state.name);
+        // console.log(fName.facebook);
+        return this.setState({ facebook: fName.facebook });
+      }
+    });
+  };
 
   getCurrentUser = () => {
     axios
@@ -87,10 +112,10 @@ class PaperSheet extends Component {
   componentDidMount() {
     this.getCurrentUser();
     this.mppSearch();
-    // setTimeout(() => {
-    // this.getTwitter();
-    // this.getFacebook();
-    // }, 10000);
+    setTimeout(() => {
+      this.getTwitter();
+      this.getFacebook();
+    }, 2000);
     setTimeout(() => this.setState({ isLoading: false }), 3000);
   }
   // --end of life cycle
@@ -138,7 +163,7 @@ class PaperSheet extends Component {
             ridingMap={ridingMap}
           />
           {/* <FollowButton userId={userId} followingId={followingId} /> */}
-          <SMData mppLockup={mppLockup} />
+          <SMData mppLockup={mppLockup} facebook={facebook} twitter={twitter} />
         </Paper>
       </div>
     );

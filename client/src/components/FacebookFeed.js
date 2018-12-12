@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React from 'react';
+import React, { Component } from 'react';
 // end of inports
 
 const facebookPlug = (d, s, id) => {
@@ -14,34 +14,65 @@ const facebookPlug = (d, s, id) => {
 
 const defaultFb = 'https://www.facebook.com/CBCPolitics/';
 
-const handleFacebookUrl = fb => {
+// const handleFacebookUrl = fb => {
+//   if (window.location.pathname === '/landing') {
+//     fb = defaultFb;
+//     console.log(fb);
+//   } else {
+//     fb = fb;
+//     console.log(fb);
+//   }
+// };
+
+const handleUrlCheck = link => {
   if (window.location.pathname === '/landing') {
-    fb = defaultFb;
-    console.log(fb);
+    // console.log('flat link ', defaultFb);
+    return (
+      <div
+        className="fb-page"
+        data-href={defaultFb}
+        data-tabs="timeline"
+        data-width="500"
+        data-small-header="true"
+        data-adapt-container-width="true"
+        data-hide-cover="true"
+        data-show-facepile="false"
+      >
+        <blockquote cite={defaultFb} className="fb-xfbml-parse-ignore">
+          <a href={defaultFb}>Politics</a>
+        </blockquote>
+      </div>
+    );
   } else {
-    fb = fb;
-    console.log(fb);
+    // console.log('super link ', link);
+    // console.log(typeof link);
+    return (
+      <div
+        className="fb-page"
+        data-href={link}
+        data-tabs="timeline"
+        data-width="500"
+        data-small-header="true"
+        data-adapt-container-width="true"
+        data-hide-cover="true"
+        data-show-facepile="false"
+      >
+        <blockquote cite={link} className="fb-xfbml-parse-ignore">
+          <a href={link}>Politics</a>
+        </blockquote>
+      </div>
+    );
   }
 };
 
-const FacebookFeed = ({ facebook }) => (
-  // handleFacebookUrl(facebook),
-  facebookPlug(document, 'script', 'facebook-jssdk'),
-  (
-    <div
-      className="fb-page"
-      data-href={defaultFb}
-      data-tabs="timeline"
-      data-width="500"
-      data-small-header="true"
-      data-adapt-container-width="true"
-      data-hide-cover="true"
-      data-show-facepile="false"
-    >
-      <blockquote cite={defaultFb} className="fb-xfbml-parse-ignore">
-        <a href={defaultFb}>Politics</a>
-      </blockquote>
-    </div>
-  )
-);
+class FacebookFeed extends Component {
+  render() {
+    const { facebook } = this.props;
+    return (
+      facebookPlug(document, 'script', 'facebook-jssdk'),
+      handleUrlCheck(facebook)
+    );
+  }
+}
+
 export default FacebookFeed;

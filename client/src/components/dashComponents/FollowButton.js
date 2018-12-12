@@ -17,7 +17,6 @@ const styles = theme => ({
 });
 
 const handleFollow = (event, followingId, userId) => {
-
   event.preventDefault();
   console.log('follow key!!!');
   axios

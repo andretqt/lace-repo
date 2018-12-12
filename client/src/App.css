@@ -23,6 +23,13 @@
 .App-intro {
   font-size: large;
 }
+
+.PrimarySearchAppBar-search-6 {
+  width: 14rem;
+}
+.css-15k3avv {
+  color: black;
+}
 #navBar {
   display: block;
 }

@@ -11,9 +11,10 @@ import Typography from '@material-ui/core/Typography';
 import TwitterFeed from './TwitterFeed';
 import FacebookFeed from './FacebookFeed';
 import SpeechFeed from './dashComponents/SpeechFeed';
+import EventFeed from './dashComponents/EventFeed';
 import VotingRecords from './dashComponents/VotingRecords';
 // Tool
-import SocialList from './list/mppSocial';
+// import SocialList from './list/mppSocial';
 // end of inports
 
 function TabContainer({ children, dir }) {
@@ -35,12 +36,19 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
     // width: 500
     flexGrow: 1 // this will center
+  },
+  tabSize: {
+    // border: 'solid 2px black',
+    maxHeight: '50vh'
   }
 });
 
 class FullWidthTabs extends React.Component {
   state = {
-    value: 0
+    value: 0,
+    name: ' ',
+    twitter: '',
+    facebook: ''
   };
 
   handleChange = (event, value) => {
@@ -51,34 +59,8 @@ class FullWidthTabs extends React.Component {
     this.setState({ value: index });
   };
 
-  //
-  getTwitter() {
-    SocialList.forEach(tName => {
-      if (tName.name === this.state.name) {
-        return this.setState({ twitter: tName.twitter });
-      }
-    });
-  }
-
-  //
-  getFacebook() {
-    SocialList.forEach(fName => {
-      if (fName.name === this.state.name) {
-        console.log(fName.name);
-        console.log(this.state.name);
-        console.log(fName.facebook);
-        return this.setState({ facebook: fName.facebook });
-      }
-    });
-  }
-
-  componentDidMount() {
-    this.getTwitter();
-    this.getFacebook();
-  }
-
   render() {
-    const { classes, theme, mppLockup } = this.props;
+    const { classes, theme, mppLockup, twitter, facebook, userId } = this.props;
 
     return (
       <div className={classes.root}>
@@ -101,6 +83,7 @@ class FullWidthTabs extends React.Component {
           axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
           index={this.state.value}
           onChangeIndex={this.handleChangeIndex}
+          className={classes.tabSize}
         >
           <TabContainer dir={theme.direction}>
             <VotingRecords
@@ -111,12 +94,14 @@ class FullWidthTabs extends React.Component {
           <TabContainer dir={theme.direction}>
             <SpeechFeed mppLockup={mppLockup} customStyle={styles.rightA} />
           </TabContainer>
-          <TabContainer dir={theme.direction}>CRUD Events Here</TabContainer>
           <TabContainer dir={theme.direction}>
-            <TwitterFeed />
+            <EventFeed userId={userId} />
           </TabContainer>
           <TabContainer dir={theme.direction}>
-            <FacebookFeed />
+            <TwitterFeed twitter={twitter} />
+          </TabContainer>
+          <TabContainer dir={theme.direction}>
+            <FacebookFeed facebook={facebook} />
           </TabContainer>
         </SwipeableViews>
       </div>
@@ -126,7 +111,9 @@ class FullWidthTabs extends React.Component {
 
 FullWidthTabs.propTypes = {
   classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired
+  theme: PropTypes.object.isRequired,
+  mppLockup: PropTypes.string.isRequired,
+  // userId: PropTypes.string.isRequired
 };
 
 export default withStyles(styles, { withTheme: true })(FullWidthTabs);

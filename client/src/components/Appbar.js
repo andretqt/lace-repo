@@ -37,18 +37,18 @@ const styles = theme => ({
   },
   search: {
     position: 'relative',
-    // borderRadius: theme.shape.borderRadius,
-    // backgroundColor: fade(theme.palette.common.white, 0.15),
-    // '&:hover': {
-    //   backgroundColor: fade(theme.palette.common.white, 0.25)
-    // },
-    // marginRight: theme.spacing.unit * 2,
-    // marginLeft: 0,
-    // width: '100%',
-    // [theme.breakpoints.up('sm')]: {
-    //   marginLeft: theme.spacing.unit * 3,
-    //   width: 'auto'
-    // }
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: fade(theme.palette.common.white, 0.15),
+    '&:hover': {
+      backgroundColor: fade(theme.palette.common.white, 0.25)
+    },
+    marginRight: theme.spacing.unit * 2,
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing.unit * 3,
+      width: 200
+    }
   },
   // searchIcon: {
   //   width: theme.spacing.unit * 9,
@@ -59,21 +59,21 @@ const styles = theme => ({
   //   alignItems: 'center',
   //   justifyContent: 'center'
   // },
-  inputRoot: {
-    color: 'black',
-    width: '100%'
-  },
-  inputInput: {
-    paddingTop: theme.spacing.unit,
-    paddingRight: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit,
-    paddingLeft: theme.spacing.unit * 10,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: 200
-    }
-  },
+  // inputRoot: {
+  //   color: 'black',
+  //   width: '100%'
+  // },
+  // inputInput: {
+  //   paddingTop: theme.spacing.unit,
+  //   paddingRight: theme.spacing.unit,
+  //   paddingBottom: theme.spacing.unit,
+  //   paddingLeft: theme.spacing.unit * 10,
+  //   transition: theme.transitions.create('width'),
+  //   width: '100%',
+  //   [theme.breakpoints.up('md')]: {
+  //     width: 200
+  //   }
+  // },
   sectionDesktop: {
     display: 'none',
     [theme.breakpoints.up('md')]: {
@@ -155,7 +155,9 @@ class PrimarySearchAppBar extends React.Component {
 
   render() {
     // const { anchorEl, mobileMoreAnchorEl } = this.state;
-    const { classes } = this.props;
+
+    const { classes, names } = this.props;
+   
 
     return (
       <div className={classes.root}>
@@ -174,15 +176,13 @@ class PrimarySearchAppBar extends React.Component {
             >
               In Their Own Words!
             </Button>
+
             <div className={classes.search}>
               <SelectMenu
-                // classes={{
-                //   root: classes.inputRoot,
-                //   input: classes.inputInput
-                // }}
                 onChange={event => this.handleChange(event)}
                 onInputChange={event => this.handleInputChange(event)}
-              />
+              >
+              </SelectMenu>
             </div>
             <AuthButton id="navBar" />
             <Button color="inherit" component={Link} to="/User">
